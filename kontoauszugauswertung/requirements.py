@@ -1,0 +1,2 @@
+ezodf
+PyPDF2
