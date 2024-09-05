@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 import telebot
+from bistro_class import BistroMenu
 
 # create a new bot using @botfather and enter its token here
 token = ""
@@ -16,23 +17,14 @@ bot.set_my_commands([c1,c2,c3,c4,c5])
 # Startup message
 @bot.message_handler(commands=["start"])
 def start(message):
-    bot.send_message(message.chat.id, "Hello at JpoTestBot, get the current lunch menu here uncomplicated and anytime. Just use the menu to selet the day you die to know the menu for and be disappointed right away! At the moment only the menu for the current week is supported.")
+    bot.send_message(message.chat.id, "Hello at JpoTestBot, get the current lunch menu here uncomplicated and anytime. Simply use the menu to select a day and be disappointed right away! At the moment only the menu for the current week is supported.")
 
 @bot.message_handler(commands=["mondaymenu", "tuesdaymenu", "wednesdaymenu", "thursdaymenu", "fridaymenu"])
 def send_menu(message):
-    # NOTE Paste code from bistro.py here
-    if "monday" in message.text.lower():
-        pass
-    if "tuesday" in message.text.lower():
-        pass
-    if "wednesday" in message.text.lower():
-        pass
-    if "thursday" in message.text.lower():
-        pass
-    if "friday" in message.text.lower():
-        pass
-    bot.send_message(message.chat.id, f"comming soon.. to a town near you {message.text}")
-
+    # parse requested weekday out of the given command
+    day = message.text.split("menu")[0][1:]
+    for menu in BistroMenu().print_day(day):
+        bot.send_message(message.chat.id, menu)
 
 
 # default handler to handle all messages of the type "msg"
